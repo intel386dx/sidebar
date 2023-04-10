@@ -1,7 +1,7 @@
 # Sidebar
 
 ## 1. Introduction
-This is a Node.js script that will run a WebSocket server running on the port 8080 and serve the sidebar page on the port 8081. User can change the message in real-time by typing the message in one of the formats:
+This is a Node.js script that will run a WebSocket server running on the port 8080 and serve the sidebar page on the port 8081. Those are the default ports and can be changed by editing the ``sidebar.node.js`` script. User can change the message in real-time by typing the message in one of the formats:
 1. Plain text
 ```
 {"type":"plain", "message":"Hello World"}
