@@ -367,9 +367,9 @@ rli.prompt();
 
 rli.on("line", function (line) {
     // Broadcast the input to all clients
-    msgdata = JSON.parse(line);
-    msgdata.status = "OK";
-    update(msgdata);
+    msgin = JSON.parse(line);
+    msgin.status = "OK";
+    update(msgin);
     rli.prompt();
 }).on("close", function () {
     JSONmsgdata = JSON.stringify(msgdata).toString();
