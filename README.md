@@ -19,4 +19,4 @@ npm install readline http ws fs path
 To change the preset message, edit the ``msgdata.json`` file using one of the formats above.
 
 ## 3. Licensing
-This is licensed under the MIT license.
+This is licensed under [the MIT license](LICENSE).
