@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Information Sidebar</title>
+        <link rel="stylesheet" href="sidebar.css">
+    </head>
+    <script src="marked.min.js" async></script>
+    <script src="sidebar.js" defer async></script>
+    <body class="root">
+        <div class="title-bar">
+            <h1 class="title">Information Sidebar</h1>
+            <div class="status-part">
+                <button class="status" id="status" title="Click to reconnect."></button>
+                <div class="ports">
+                	<div class="port">
+						<span class="port-name">Port:</span>
+						<span id="port" style="margin-left:4px">${sidebarPort}</span>
+					</div>
+                	<div class="port">
+						<span class="port-name">Socket port:</span>
+						<span id="socket-port" style="margin-left:4px">${daemonPort}</span>
+					</div>
+				</div>
+            </div>
+        </div>
+        <div class="body">
+            <div id="message" class="information" placeholder="Messages will be shown here"></div>
+        </div>
+        <div class="form">
+            <div id="update-sidebar-resizer"></div>
+            <h1 class="title">Update Sidebar</h1>
+            <form id="update-sidebar" class="update-sidebar">
+                <table><tbody>
+                    <tr>
+                        <td><label for="message-type">Type:</label></td>
+                        <td><select id="message-type" style="width:100%">
+                            <option value="">Select a type</option>
+                            <option value="plain">Plain text</option>
+                            <option value="markdown">Markdown</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                        <td><label for="message-content">Message:</label></td>
+                        <td><textarea id="message-content" placeholder="Type a message" style="width:100%"></textarea></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Update"></td>
+                    </tr>
+                </tbody></table>
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,190 @@
+:root, html, body {
+    width: 100vw;
+    height: 100vh;
+}
+:root, html {
+    background-color: transparent;
+    background: none;
+}
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+code, kbd, output, pre {
+    font-family: monospace;
+}
+.root, body {
+    display: flex;
+    flex-direction: column;
+    margin: 0px;
+    background-color: #f0f0f0;
+    color: black;
+    border: 1px solid #c0c0c0;
+}
+.title-bar {
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row;
+    margin: 8px;
+}
+body > * + * {
+    margin: 0px 8px 8px 8px;
+}
+.title {
+    width: 100%;
+    height: 100%;
+    margin: 0px;
+    font-size: 21pt;
+    font-weight: 300;
+    user-select: none;
+}
+.status-part {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-end;
+    text-transform: uppercase;
+    font-size: 7pt;
+    font-style: normal;
+    white-space: nowrap;
+}
+.status-part > * {
+    padding: 2px;
+    text-transform: uppercase;
+    font-size: 7pt;
+    font-style: normal;
+    white-space: nowrap;
+}
+.status {
+    display: flex;
+    flex-direction: row;
+    padding: 2px;
+    pointer-events: none;
+    background-color: transparent;
+    border: 0px solid;
+}
+.status:hover {
+    background-color: darkgray;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.status:active {
+    background-color: gray;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.status[condition=disconnected],
+.status[condition=error] {
+    pointer-events: all;
+}
+.status[condition=disconnected]::before {
+    content: "Socket Disconnected";
+    color: maroon;
+}
+.status[condition=error]::before {
+    content: "Error";
+    color: maroon;
+}
+.status[condition=connecting]::before {
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border: 1px solid;
+    border-bottom: 1px solid transparent;
+    border-radius: 10px;
+    animation: spin 1s linear infinite;
+}
+.status[condition=connecting]::after {
+    content: "Connecting...";
+    margin-left: 4px;
+    color: gray;
+}
+.status[condition=connected]::before {
+    content: "Socket Connected";
+    color: green;
+}
+.ports {
+    display: flex;
+	flex-direction: row;
+}
+.port {
+    display: flex;
+	flex-direction: row;
+}
+.port + .port {
+	margin-left: 4px;
+}
+.port .port-name {
+	font-weight: bold;
+}
+.body {
+    background-color: white;
+    padding: 8px;
+    height: 100%;
+}
+.information {
+    width: 100%;
+    height: 100%;
+    resize: none;
+    background-color: transparent;
+    border: 0px solid;
+    border-radius: 0px;
+    font-size: 9pt;
+}
+.information p {
+    margin: 0px;
+}
+.information p + p {
+    margin-top: 12px;
+}
+.information::placeholder {
+    font-style: italic;
+    color: black;
+    opacity: 1;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+}
+#update-sidebar-resizer {
+    height: 4px;
+    width: 100%;
+    background-color: #c0c0c0;
+    box-sizing: content-box;
+    margin-bottom: 8px;
+}
+.update-sidebar table {
+    border-collapse: collapse;
+    border: 0px solid;
+    width: 100%;
+}
+.update-sidebar table label {
+    width: auto;
+}
+.update-sidebar textarea {
+    font-family: monospace;
+    resize: none;
+}
+@keyframes spin {
+    from { transform: rotate(0deg)   }
+    to   { transform: rotate(359deg) }
+}
+@media only screen and (max-width: 280px) {
+    .title {
+        font-size: 18pt;
+    }
+}
+@media only screen and (max-width: 425px) {
+	.title-bar {
+		flex-direction: column-reverse;
+		align-items: flex-start;
+	}
+	.status-part {
+		width: 100%;
+		margin-bottom: 8px;
+		padding-bottom: 6px;
+		flex-direction: row;
+		justify-content: space-between;
+		align-content: center;
+		border-bottom: 1px solid #c0c0c0;
+	}
+}
