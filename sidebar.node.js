@@ -532,9 +532,9 @@ function main() {
 
         const rl = require("readline");
         const rli = rl.createInterface({
-        input: process.stdin,
-        output: process.stdout,
-        prompt: "Message: "
+            input: process.stdin,
+            output: process.stdout,
+            prompt: "JSON: "
         });
 
         const http = require("http");
@@ -652,7 +652,7 @@ function main() {
         console.log(" ");
         console.log("To edit the sidebar from your browser, visit http://localhost:" + formPort + "/.");
         console.log(" ");
-        console.log("Type a message here or press Ctrl+C to exit");
+        console.log("Type the message in JSON here or press Ctrl+C to exit");
         console.log("The message format should be like:");
         console.log("1. Plain text message");
         console.log("   {\"type\":\"plain\", \"message\":\"Hello World\"}");
@@ -678,9 +678,9 @@ function main() {
         });
     } catch (x) {
         console.error(x);
-        console.log("Let's try again.")
+        console.log("Let's try again.");
         if (tries < maxTries) {
-            main()
+            main();
         } else {
             console.error("I give up. I attempted to run it for " + maxTries + " attempt" + (maxTries > 1? "s " : " ") + "and I still got errors.");
         };
