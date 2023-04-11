@@ -636,17 +636,20 @@
 
     rli.prompt();
 
-rli.on("line", function (line) {
+    rli.on("line", function (line) {
     // Broadcast the input to all clients
     msgdata = JSON.parse(line);
     msgdata.status = "OK";
     update(msgdata);
     rli.prompt();
-}).on("close", function () {
+    }).on("close", function () {
     JSONmsgdata = JSON.stringify(msgdata).toString();
     console.log(JSONmsgdata);
     fs.writeFile(path.join(__dirname, "msgdata.json"), JSONmsgdata, {flag: "a"}, function(err) {
         if (err) console.log(err);
     });
     process.exit(0);
-});
+    });
+ } catch (x) {
+    console.error(x)
+ };
