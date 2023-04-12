@@ -3,7 +3,7 @@
 ## 1. Introduction
 This is a Node.js script that will run a WebSocket server running on the port 8080, serve the sidebar page on the port 8081, and serve the UI to update the sidebar on the port 8082. Those are the default ports and can be changed by editing the ``sidebar.node.js`` script.
 
-The source files for the sidebar and the sidebar changer UI, and Marked is included in the ``pages`` folder. 
+The source files for the sidebar and the sidebar changer UI, and [Marked](https://github.com/markedjs/marked) is included in the ``pages`` folder. 
 
 ## 2. Installation
 Just ``git clone`` this repository and run the ``sidebar.node.js`` script inside it. You can install or upgrade the modules used by this script by running the command below while on the script's directory:
