@@ -20,7 +20,11 @@ To change the preset message, edit the ``msgdata.json`` file using one of the fo
   ```
   {"type":"markdown", "message":"Hello World"}
   ```
+> If you want to include the double-quote and backslash marks in your message, use ``\"`` and ``\\``, respectively.
+
 2. Or, you can access the port 8082 (by default) to access the web-based UI to change the message. The UI is simple and intuitive. You choose the message type, type in the message, and hit the Update button.
 
-## 3. Licensing
+> This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
+
+## 4. Licensing
 This is licensed under [the MIT license](LICENSE).
