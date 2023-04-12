@@ -295,6 +295,9 @@ function main() {
             font-family: monospace;
             resize: none;
         }
+        #message-type {
+            padding: 4px;
+        }
         #message-content {
             height: 100%;
         }
