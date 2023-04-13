@@ -15,22 +15,29 @@ npm install readline http ws fs path
 To change the preset message, edit the ``msgdata.json`` file using one of the formats above.
 
 ## 3. Usage
-1. While the script is running, you can change the message in real-time by typing the message to the terminal in one of the formats below. Press Enter to submit the message.
-  * **Plain text**
+1. While the script is running, you can change the message in real-time by typing the message to the prompt in one of the formats below. Press Enter to submit the message.
+  - **Plain text**
   ```
   {"type":"plain", "message":"Hello World"}
   ```
-  * **Markdown**
+  - **Markdown**
   ```
   {"type":"markdown", "message":"Hello World"}
   ```
-> If you want to include the double-quote and backslash marks in your message, use ``\"`` and ``\\``, respectively.
+> **Note:** If you want to include the double-quote and backslash marks in your message, use ``\"`` and ``\\``, respectively.
+> For example:
+> ```
+> {"type":"plain", "message":"Press the Windows logo key + R, type \"C:\\Windows\\System32\\cmd.exe\", and then select OK."}
+> ```
+> will output something like this:
+>
+> ![This is what you will see.](screenshots/escaping-example.png)
 
 2. Or, you can access the port 8082 (by default) to access the web-based UI to change the message. The UI is simple and intuitive. You choose the message type, type in the message, and hit the Update button.
 
 ![Update Sidebar UI](screenshots/update-sidebar.png)
 
-> This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
+> **Note:** This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
 
 ## 4. Licensing
 See [LICENSE.md](LICENSE.md) for more information.
