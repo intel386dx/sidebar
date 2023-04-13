@@ -221,6 +221,7 @@ function main() {
             border: 1px solid #c0c0c0;
             padding: 8px;
             height: 100%;
+            overflow: auto;
         }
         .information {
             width: 100%;
