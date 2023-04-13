@@ -18,6 +18,13 @@ npm install readline http ws fs path
 ```
 To change the preset message, edit the ``msgdata.json`` file using one of the formats above.
 
+### 2.1. Minifying the script
+
+You can use the included UglifyJS to minify the script by running:
+```
+uglifyjs sidebar.node.js > sidebar.node.min.js
+```
+
 ## 3. Usage
 1. While the script is running, you can change the message in real-time by typing the message to the prompt in one of the formats below. Press Enter to submit the message.
   - **Plain text**
