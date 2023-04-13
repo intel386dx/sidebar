@@ -1,5 +1,7 @@
 # Sidebar
 
+![Last commit time](https://img.shields.io/github/last-commit/intel386dx/sidebar.svg) [![Download ZIP file](https://img.shields.io/badge/zip%20file-download-blue)](https://github.com/intel386dx/sidebar/archive/main.zip)
+
 ![My designed cover](cover/cover-shadowed.png)
 
 ## 1. Introduction
