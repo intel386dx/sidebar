@@ -33,4 +33,4 @@ To change the preset message, edit the ``msgdata.json`` file using one of the fo
 > This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
 
 ## 4. Licensing
-``sidebar.node.js``, its dependencies, and Marked is licensed under [the MIT license](LICENSE).
+``sidebar.node.js``, its dependencies, and Marked is licensed under [the MIT license](LICENSE), while the embedded DOMPurify is licensed under both the Apache license and the Mozilla Public License.
