@@ -5,7 +5,7 @@ This is a Node.js script that will run a WebSocket server running on the port 80
 
 ![Sidebar UI](screenshots/information-sidebar.png)
 
-The source files for the sidebar and the sidebar changer UI, and [Marked](https://github.com/markedjs/marked) is included in the ``pages`` folder. 
+The source files for the sidebar, the sidebar changer UI, and the minified versions of [Marked](https://github.com/markedjs/marked) and [DOMPurify](https://github.com/cure53/DOMPurify) is included in the ``pages`` folder. 
 
 ## 2. Installation
 Just ``git clone`` this repository and run the ``sidebar.node.js`` script inside it. You can install or upgrade the modules used by this script by running the command below while on the script's directory:
@@ -33,4 +33,4 @@ To change the preset message, edit the ``msgdata.json`` file using one of the fo
 > This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
 
 ## 4. Licensing
-``sidebar.node.js``, its dependencies, and Marked is licensed under [the MIT license](LICENSE), while the embedded DOMPurify is licensed under both the Apache license and the Mozilla Public License.
+See [LICENSE.md](LICENSE.md) for more information.
