@@ -89,8 +89,8 @@ You may obtain a copy of the License at
     limitations under the License.
 ```
 
-UglifyJS (mishoo/UglifyJS)
-==========================
+UglifyJS _(mishoo/UglifyJS)_
+----------------------------
 
 ```
 UglifyJS is released under the BSD license:
