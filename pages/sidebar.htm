@@ -5,24 +5,25 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Information Sidebar</title>
         <link rel="stylesheet" href="sidebar.css">
+        <script src="purify.min.js" async></script>
+        <script src="marked.min.js" async></script>
+        <script src="sidebar.js" defer async></script>
     </head>
-    <script src="marked.min.js" async></script>
-    <script src="sidebar.js" defer async></script>
     <body class="root">
         <div class="title-bar">
             <h1 class="title">Information Sidebar</h1>
             <div class="status-part">
                 <button class="status" id="status" title="Click to reconnect."></button>
                 <div class="ports">
-                	<div class="port">
-						<span class="port-name">Port:</span>
-						<span id="port" style="margin-left:4px">${sidebarPort}</span>
-					</div>
-                	<div class="port">
-						<span class="port-name">Socket port:</span>
-						<span id="socket-port" style="margin-left:4px">${daemonPort}</span>
-					</div>
-				</div>
+                    <div class="port">
+                        <span class="port-name">Port:</span>
+                        <span id="port" style="margin-left:4px">${sidebarPort}</span>
+                    </div>
+                    <div class="port">
+                        <span class="port-name">Socket port:</span>
+                        <span id="socket-port" style="margin-left:4px">${daemonPort}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="body">

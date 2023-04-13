@@ -3,9 +3,9 @@ function $i(id) {
 };
 
 $i("status").onclick = function() {
-    if (this.getAttribute("condition") == "disconnected") {
+    if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
         startWebSocket();
-    }
+    };
 };
 
 function changeStatus(status) {
@@ -17,9 +17,9 @@ function changeStatus(status) {
 // Source: https://www.educative.io/answers/how-to-escape-unescape-html-characters-in-string-in-javascript
 function escapeHTMLChars(string) {
     return string.replace(/</g, "&lt;")
-                 .replace(/>/g, "&gt;")
-                 .replace(/"/g, "&quot;")
-                 .replace(/'/g, "&#39;"); 
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;"); 
 };
 
 function startWebSocket() {
