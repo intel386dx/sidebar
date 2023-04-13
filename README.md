@@ -1,5 +1,7 @@
 # Sidebar
 
+![My designed cover](cover/cover-shadowed.png)
+
 ## 1. Introduction
 This is a Node.js script that will run a WebSocket server running on the port 8080, serve the sidebar page on the port 8081, and serve the UI to update the sidebar on the port 8082. Those are the default ports and can be changed by editing the ``sidebar.node.js`` script.
 
