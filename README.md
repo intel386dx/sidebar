@@ -20,7 +20,13 @@ To change the preset message, edit the ``msgdata.json`` file using one of the fo
 
 ### 2.1. Minifying the script
 
-You can use the included UglifyJS to minify the script by running:
+You can use UglifyJS to minify the script by following these steps:
+
+1. Install the UglifyJS command-line tool by running:
+```
+npm install uglify-js -g
+```
+2. Now minify the script by running:
 ```
 uglifyjs sidebar.node.js > sidebar.node.min.js
 ```
