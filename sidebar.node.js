@@ -27,6 +27,11 @@ function main() {
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Defining the ports used by the ws and http modules
+        //
+        // The lesser-privileged-friendly defaults:
+        // const daemonPort = 8080;
+        // const sidebarPort = 8081;
+        // const formPort = 8082;
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         const daemonPort = 8080;
         const sidebarPort = 8081;
