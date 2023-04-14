@@ -30,9 +30,9 @@ sudo snap install node --classic
 ```
 
 ### 2.1.4. Android
-Download and install the latest version of Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/). Open the Termux app, wait for the base system packages to be installed, and install Node.js by running the command below.
+Download and install the latest version of Termux from [F-Droid](https://f-droid.org/en/packages/com.termux/). Open the Termux app, wait for the base system packages to be installed, and install Node.js and Git by running the command below.
 ```shell
-pkg install node
+pkg install nodejs git
 ```
 
 ## 2.2. Running the script 
@@ -48,11 +48,11 @@ To change the preset message, edit the ``msgdata.json`` file using one of the fo
 You can use UglifyJS to minify the script by following these steps:
 
 1. Install the UglifyJS command-line tool by running:
-```
+```shell
 npm install uglify-js -g
 ```
 2. Now minify the script by running:
-```
+```shell
 uglifyjs sidebar.node.js > sidebar.node.min.js
 ```
 
@@ -64,7 +64,7 @@ uglifyjs sidebar.node.js > sidebar.node.min.js
   ```
   - **Markdown**
   ```json
-  {"type":"markdown", "message":"Hello World"}
+  {"type":"markdown", "message":"# Hello World"}
   ```
 > **Note:** If you want to include the double-quote and backslash marks in your message, use ``\"`` and ``\\``, respectively.
 > For example:
