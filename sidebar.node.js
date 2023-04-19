@@ -210,7 +210,7 @@ function main() {
             pointer-events: all;
         }
         .status[condition=disconnected]::before {
-            content: "${process.env.CODESPACES? "Codespaces" : "Socket"} Disconnected";
+            content: "${process.env.CODESPACES == "true"? "Codespaces" : "Socket"} Disconnected";
             color: maroon;
         }
         .status[condition=error]::before {
