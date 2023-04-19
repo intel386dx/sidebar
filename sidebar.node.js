@@ -210,7 +210,7 @@ function main() {
             pointer-events: all;
         }
         .status[condition=disconnected]::before {
-            content: "Socket Disconnected";
+            content: "${process.env.CODESPACES? "Codespaces" : "Socket"} Disconnected";
             color: maroon;
         }
         .status[condition=error]::before {
@@ -233,7 +233,7 @@ function main() {
             color: gray;
         }
         .status[condition=connected]::before {
-            content: "Socket Connected";
+            content: "${process.env.CODESPACES == "true"? "Codespaces" : "Socket"} Connected";
             color: green;
         }
         .ports {
@@ -579,6 +579,7 @@ function main() {
         startWebSocket();
 
         function getMessageOnLoad() {
+            startWebSocket();
             ws.addEventListener("message", function (x) {
                 msgdata = JSON.parse(x.data) || x.data;
                 if (typeof msgdata == "object") {
@@ -598,6 +599,7 @@ function main() {
         };
 
         function send() {
+            startWebSocket();
             if (ws.readyState !== WebSocket.OPEN) return;
             const message = JSON.stringify({
                 type: $i("message-type").value,
