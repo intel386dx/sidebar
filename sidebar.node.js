@@ -49,8 +49,52 @@ function main() {
         //
         // Part of sidebar.node.js
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+        const sidebarHTML = function(mini) {
+	        return `<!DOCTYPE html>
+	        <html>
+	            <head>
+	                <meta charset="utf-8">
+	                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	                <title>Information Sidebar</title>
+	                <link rel="stylesheet" href="sidebar.css">
+	                <script src="purify.min.js" async></script>
+	                <script src="marked.min.js" async></script>
+	                <script src="sidebar.js" defer async></script>
+	            </head>
+	            <body class="root ${mini? 'mini' : ''}">
+	                <div class="title-bar">
+	                    <h1 class="title">Information Sidebar</h1>
+	                    <div class="status-part">
+	                        <button class="status" id="status" title="Click to reconnect."></button>
+	                        <div class="ports">
+	                            <div class="port">
+	                                <span class="port-name">Port:</span>
+	                                <span id="port" style="margin-left:4px">${sidebarPort}</span>
+	                            </div>
+	                            <div class="port">
+	                                <span class="port-name">Socket port:</span>
+	                                <span id="socket-port" style="margin-left:4px">${daemonPort}</span>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="body">
+	                    <div id="message" class="information" placeholder="Messages will be shown here"></div>
+	                </div>
+	            </body>
+	        </html>`;
+        };
 
-        const sidebarHTML =
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // mini.html
+        // =========
+        // The mini sidebar UI.
+        //
+        // Part of sidebar.node.js
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        const sidebarMiniHTML =
         `<!DOCTYPE html>
         <html>
             <head>
@@ -62,7 +106,7 @@ function main() {
                 <script src="marked.min.js" async></script>
                 <script src="sidebar.js" defer async></script>
             </head>
-            <body class="root">
+            <body class="root mini">
                 <div class="title-bar">
                     <h1 class="title">Information Sidebar</h1>
                     <div class="status-part">
@@ -116,6 +160,12 @@ function main() {
             background-color: #f0f0f0;
             color: black;
             border: 1px solid #c0c0c0;
+        }
+        .root.mini .title-bar {
+            display: none;
+        }
+        .root.mini .body {
+            margin: 1px;
         }
         input[type=text],
         input[type=number],
@@ -193,7 +243,7 @@ function main() {
             flex-direction: row;
             font-weight: bold;
             padding: 2px;
-            pointer-events: none;
+            pointer-events: all;
             background-color: transparent;
             border: 0px solid;
         }
@@ -256,6 +306,13 @@ function main() {
             padding: 8px;
             height: 100%;
             overflow: auto;
+        }
+        .body[condition=error],
+        .body[condition=disconnected] {
+            background-color: #ffe8e8;
+        }
+        .body[condition=connected] {
+            animation: 1s connected linear;
         }
         .information {
             width: 100%;
@@ -352,6 +409,10 @@ function main() {
             from { transform: rotate(0deg)   }
             to   { transform: rotate(359deg) }
         }
+        @keyframes connected {
+            from { background-color: #e8ffe8 }
+            to   { background-color: white   }
+        }
         @media only screen and (max-width: 280px) {
             .title {
                 font-size: 18pt;
@@ -382,65 +443,80 @@ function main() {
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const sidebarJS = 
-        `function $i(id) {
-            return document.getElementById(id);
-        };
-
-        $i("status").onclick = function() {
-            if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
-                startWebSocket();
-            };
-        };
-
-        function changeStatus(status) {
-            statusbar = $i("status");
-            statusbar.setAttribute("condition", status);
-            console.log("Status change: " + status);
-        };
-
-        // Source: https://www.educative.io/answers/how-to-escape-unescape-html-characters-in-string-in-javascript
-        function escapeHTMLChars(string) {
-            return string.replace(/</g, "&lt;"  )
-                         .replace(/>/g, "&gt;"  )
-                         .replace(/"/g, "&quot;")
-                         .replace(/'/g, "&#39;" ); 
-        };
-
-        function startWebSocket() {
-            try {
-                changeStatus("connecting");
-                
-                hostname = new URL(window.location.href).hostname;
-                ws = new WebSocket("ws://" + hostname + ":${daemonPort}");
-
-                ws.addEventListener("open", function () {
-                    changeStatus("connecting");
-                });
-
-                ws.addEventListener("close", function () {
-                    changeStatus("disconnected");
-                });
-
-                ws.addEventListener("message", function (x) {
-                    msgdata = JSON.parse(x.data) || x.data;
-                    if (typeof msgdata == "object") {
-                        if (typeof msgdata.status == "string" && msgdata.status == "OK") {
-                            changeStatus("connected");
-                        }
-                        if (msgdata.type == "plain") {
-                            $i("message").innerHTML = escapeHTMLChars(msgdata.message);
-                        } else if (msgdata.type == "markdown") {
-                            $i("message").innerHTML = marked.parse(msgdata.message);
-                        };
-                    } else {
-                        $i("message").innerHTML = msgdata;
-                    };
-                });
-            } catch (e) {
-                changeStatus("error");
-            };
-        };
-        startWebSocket()`;
+	    `try {
+            function $i(id) {
+	            return document.getElementById(id);
+	        };
+	
+	        $i("status").onclick = function() {
+	            // if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
+	                startWebSocket(null, null);
+	            // };
+	        };
+	
+	        if (document.querySelector(".root.mini .body") != null) 
+	        document.querySelector(".root.mini .body").ondblclick = function () {
+	            // if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
+	                startWebSocket();
+	            // };
+	        };
+	
+	        function changeStatus(status) {
+	            statusbar = $i("status");
+	            if (document.querySelector(".root.mini .body") !== null) body = document.querySelector(".root.mini .body")
+	            statusbar.setAttribute("condition", status);
+	            if (typeof body !== "undefined" && body != null) body.setAttribute("condition", status);
+	            console.log("Status change: " + status);
+	        };
+	
+	        // Source: https://www.educative.io/answers/how-to-escape-unescape-html-characters-in-string-in-javascript
+	        function escapeHTMLChars(string) {
+	            return string.replace(/</g, "&lt;"  )
+	                         .replace(/>/g, "&gt;"  )
+	                         .replace(/"/g, "&quot;")
+	                         .replace(/'/g, "&#39;" ); 
+	        };
+	
+	        function startWebSocket(callback, error) {
+	            try {
+	                changeStatus("connecting");
+	                
+	                hostname = new URL(window.location.href).hostname;
+	                ws = new WebSocket("ws://" + hostname + ":${daemonPort}");
+	
+	                ws.addEventListener("open", function () {
+	                    changeStatus("connecting");
+	                });
+	
+	                ws.addEventListener("close", function () {
+	                    changeStatus("disconnected");
+	                });
+	
+	                ws.addEventListener("message", function (x) {
+	                    msgdata = JSON.parse(x.data) || x.data;
+	                    if (typeof msgdata == "object") {
+	                        if (typeof msgdata.status == "string" && msgdata.status == "OK") {
+	                            changeStatus("connected");
+	                        }
+	                        if (msgdata.type == "plain") {
+	                            $i("message").innerHTML = escapeHTMLChars(msgdata.message);
+	                        } else if (msgdata.type == "markdown") {
+	                            $i("message").innerHTML = marked.parse(msgdata.message);
+	                        };
+	                    } else {
+	                        $i("message").innerHTML = msgdata;
+	                    };
+	                });
+	                if (typeof callback === "function") callback($i("status").getAttribute("condition"));
+	            } catch (e) {
+	                changeStatus("error");
+	                if (typeof error === "function") error(e);
+	            };
+	        };
+	        startWebSocket(null, null)
+        } catch(x) {
+        	alert(x)
+        }`;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // form.htm
@@ -511,10 +587,18 @@ function main() {
             return document.getElementById(id);
         };
 
+        function msgbox(string, title = null, callback = null) {
+            if (callback != null) {
+                callback(alert(string))
+            } else {
+                alert(string)
+            }
+        };
+
         $i("status").onclick = function() {
-            if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
-                startWebSocket();
-            };
+            // if (this.getAttribute("condition") == "disconnected" || this.getAttribute("condition") == "error") {
+                startWebSocket(null, null);
+            // };
         };
 
         function changeStatus(status) {
@@ -533,7 +617,7 @@ function main() {
 
         function previewMessage(message) {
             previewOutput = window.open("", "popup", "width=360,height=400");
-            previewOutput.document.write(DOMPurify.sanitize('<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Preview Message</title></head><style>*{font-family:sans-serif} code,kbd,output,pre{font-family:monospace}</style><body><div class="preview">' + message + '</div></body></html>'));
+            previewOutput.document.write(DOMPurify.sanitize('<!DOCTYPE html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Preview Message</title><style>*{font-family:sans-serif} code,kbd,output,pre{font-family:monospace}</style></head><body><div class="preview">' + message + '</div></body></html>'));
         };
 
         function preview () {
@@ -548,7 +632,7 @@ function main() {
             previewMessage(msgpreview);
         };
 
-        function startWebSocket() {
+        function startWebSocket(callback, error) {
             try {
                 changeStatus("connecting");
                 
@@ -572,41 +656,48 @@ function main() {
                     msgdata = JSON.parse(x.data) || x.data;
                     if ((typeof msgdata == "object" && typeof msgdata.status !== "undefined") && msgdata.status == "OK") changeStatus("connected")
                 });
+                if (typeof callback === "function" && ws.readyState !== WebSocket.OPEN) 
+                    callback($i("status").getAttribute("condition"));
             } catch (e) {
                 changeStatus("error");
+                if (typeof error === "function") error(e);
             };
         };
-        startWebSocket();
+        startWebSocket(null, null);
 
         function getMessageOnLoad() {
-            startWebSocket();
-            ws.addEventListener("message", function (x) {
-                msgdata = JSON.parse(x.data) || x.data;
-                if (typeof msgdata == "object") {
-                    if (typeof msgdata.status == "string" && msgdata.status == "OK") {
-                        changeStatus("connected");
-                    }
-                    if (msgdata.type == "plain") {
-                        $i("message-content").value = DOMPurify.sanitize(msgdata.message);
-                    } else if (msgdata.type == "markdown") {
-                        $i("message-content").value = DOMPurify.sanitize(marked.parse(msgdata.message));
+            startWebSocket(function(x) {
+                ws.addEventListener("message", function (x) {
+                    msgdata = JSON.parse(x.data) || x.data;
+                    if (typeof msgdata == "object") {
+                        if (typeof msgdata.status == "string" && msgdata.status == "OK") {
+                            changeStatus("connected");
+                        }
+                        if (msgdata.type == "plain") {
+                            $i("message-content").value = DOMPurify.sanitize(msgdata.message);
+                        } else if (msgdata.type == "markdown") {
+                            $i("message-content").value = DOMPurify.sanitize(marked.parse(msgdata.message));
+                        };
+                    } else {
+                        $i("message").innerHTML = msgdata;
                     };
-                } else {
-                    $i("message").innerHTML = msgdata;
-                };
-            });
-            document.removeEventListener("load", getMessage);
+                });
+                document.removeEventListener("load", getMessage);
+            }, null);
         };
 
         function send() {
-            startWebSocket();
-            if (ws.readyState !== WebSocket.OPEN) return;
-            const message = JSON.stringify({
-                type: $i("message-type").value,
-                message: $i("message-content").value,
-                status: "OK"
-            });
-            ws.send(message);
+            startWebSocket(function(x) {
+                // if (ws.readyState !== WebSocket.OPEN) return;
+                const message = JSON.stringify({
+                    type: $i("message-type").value,
+                    message: $i("message-content").value,
+                    status: "OK"
+                });
+                ws.send(message);
+            }, function(x) {
+                msgbox(x.toString(), "Error", null)
+            })
         };
         
         document.addEventListener("load", getMessageOnLoad);`;
@@ -671,7 +762,9 @@ function main() {
             };
             const reqPath = req.url;
             if (reqPath == "/") {
-                ret(200, sidebarHTML, "text/html");
+                ret(200, sidebarHTML(false), "text/html");
+            } else if (reqPath == "/mini") {
+                ret(200, sidebarHTML(true), "text/html");
             } else if (reqPath === "/sidebar.css") {
                 ret(200, sidebarCSS, "text/css");
             } else if (reqPath == "/sidebar.js") {
@@ -723,13 +816,48 @@ function main() {
         const wss = new ws.Server({
             port: daemonPort
         });
-
+        
+        msg = {};
+        msgdata = { status: "OK" };
+        function update(msgobj) {
+            msgdata = msgobj;
+        };
+        
+        function sendMessage(message) {
+            wss.clients.forEach(function each(client) {
+                if (client.readyState === ws.OPEN) {
+                    client.send(message);
+                };
+            });
+        };
+        
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Retrieve preset message from msgdata.json
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        const fs = require("fs");
+        const path = require("path");
+        
+        fs.readFile(path.join(__dirname, "msgdata.json"), "utf8", function(err, data) {
+            if (err) {
+                console.log(err);
+            } else {
+                if (typeof data == "string" && data !== "") update(JSON.parse(data));
+            };
+        });
+        
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // Send messages periodically to make sure the new message will be delivered as soon as a client is 
+        // connected
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////
         try {
             wss.on("connection", function connection(ws) {
                 ws.on("message", function incoming(message) {
                     update(JSON.parse(message));
+                    sendMessage(JSON.stringify(msgdata))
                 });
-                    sendMessage("{ \"status\":\"OK\" }");
+                sendMessage('{ "status": "OK" }');
+                sendMessage(JSON.stringify(msgdata));
             });
 
             wss.on("error", function error(x) {
@@ -740,42 +868,9 @@ function main() {
             console.log("WebSocket failed to start: " + x);
             process.exit(1);
         };
-
-        msg = {};
-        msgdata = {};
-        function update(msgobj) {
-            msgdata = msgobj;
-        };
-
-        function sendMessage(message) {
-            wss.clients.forEach(function each(client) {
-                if (client.readyState === ws.OPEN) {
-                    client.send(message);
-                };
-            });
-        };
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Retrieve preset message from msgdata.json
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        const fs = require("fs");
-        const path = require("path");
-
-        fs.readFile(path.join(__dirname, "msgdata.json"), "utf8", function(err, data) {
-            if (err) {
-                console.log(err);
-            } else {
-                if (typeof data == "string" && data !== "") update(JSON.parse(data));
-            };
-        });
-
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // Send messages periodically to make sure the new message will be delivered as soon as a client is 
-        // connected
-        //////////////////////////////////////////////////////////////////////////////////////////////////////////
-        setInterval(function () {
-            sendMessage(JSON.stringify(msgdata));
-        }, 100);
+        // setInterval(function () {
+        //     sendMessage(JSON.stringify(msgdata));
+        // }, 100);
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Program termination function
