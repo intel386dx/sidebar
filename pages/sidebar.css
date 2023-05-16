@@ -21,6 +21,12 @@ code, kbd, output, pre {
     color: black;
     border: 1px solid #c0c0c0;
 }
+.root.mini .title-bar {
+    display: none;
+}
+.root.mini .body {
+    margin: 1px;
+}
 input[type=text],
 input[type=number],
 input[type=date],
@@ -97,7 +103,7 @@ body > * + * {
     flex-direction: row;
     font-weight: bold;
     padding: 2px;
-    pointer-events: none;
+    pointer-events: all;
     background-color: transparent;
     border: 0px solid;
 }
@@ -160,6 +166,13 @@ body > * + * {
     padding: 8px;
     height: 100%;
     overflow: auto;
+}
+.body[condition=error],
+.body[condition=disconnected] {
+    background-color: #ffe8e8;
+}
+.body[condition=connected] {
+    animation: 1s connected linear;
 }
 .information {
     width: 100%;
@@ -255,6 +268,10 @@ body > * + * {
 @keyframes spin {
     from { transform: rotate(0deg)   }
     to   { transform: rotate(359deg) }
+}
+@keyframes connected {
+    from { background-color: #e8ffe8 }
+    to   { background-color: white   }
 }
 @media only screen and (max-width: 280px) {
     .title {
