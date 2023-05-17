@@ -1,7 +1,16 @@
 License notices
 ===============
 
-``sidebar.node.js`` uses following third-party developed libraries and modules to work properly and as intended. I would thank all the authors of the following libraries and modules.
+``sidebar.node.js`` uses following third-party developed libraries and modules to work properly and as intended. Also includes Windows 32-bit and 64-bit copies of Node.js 12.22.9 for your convenience. I would thank all the authors of the following libraries and modules.
+
+----------------------------------------------------------
+
+Node.js 12.22.9
+---------------
+
+> Licensing documents:
+> * [LICENSE (32-bit)](node_win32/LICENSE) 
+> * [LICENSE (64-bit)](node_win32/LICENSE)
 
 ----------------------------------------------------------
 
