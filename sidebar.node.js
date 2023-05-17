@@ -904,6 +904,8 @@ function main() {
             msgdata = JSON.parse(line);
             msgdata.status = "OK";
             update(msgdata);
+            sendMessage('{ "status": "OK" }');
+            sendMessage(JSON.stringify(msgdata));
             rli.prompt();
         }).on("close", function () {
             //////////////////////////////////////////////////////////////////////////////////////////////////////
