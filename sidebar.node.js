@@ -491,13 +491,14 @@ function main() {
 	                ws.addEventListener("close", function () {
 	                    changeStatus("disconnected");
 	                });
-	
+					
 	                ws.addEventListener("message", function (x) {
 	                    msgdata = JSON.parse(x.data) || x.data;
 	                    if (typeof msgdata == "object") {
 	                        if (typeof msgdata.status == "string" && msgdata.status == "OK") {
 	                            changeStatus("connected");
-	                        }
+								if (typeof callback === "function") callback($i("status").getAttribute("condition"));
+	                        };
 	                        if (msgdata.type == "plain") {
 	                            $i("message").innerHTML = escapeHTMLChars(msgdata.message);
 	                        } else if (msgdata.type == "markdown") {
@@ -507,7 +508,6 @@ function main() {
 	                        $i("message").innerHTML = msgdata;
 	                    };
 	                });
-	                if (typeof callback === "function") callback($i("status").getAttribute("condition"));
 	            } catch (e) {
 	                changeStatus("error");
 	                if (typeof error === "function") error(e);
@@ -641,6 +641,7 @@ function main() {
 
                 ws.addEventListener("open", function () {
                     changeStatus("connecting");
+                    if (typeof callback === "function" && ws.readyState === 1) callback($i("status").getAttribute("condition"));
                 });
 
                 ws.addEventListener("error", function () {
@@ -656,8 +657,6 @@ function main() {
                     msgdata = JSON.parse(x.data) || x.data;
                     if ((typeof msgdata == "object" && typeof msgdata.status !== "undefined") && msgdata.status == "OK") changeStatus("connected")
                 });
-                if (typeof callback === "function" && ws.readyState !== WebSocket.OPEN) 
-                    callback($i("status").getAttribute("condition"));
             } catch (e) {
                 changeStatus("error");
                 if (typeof error === "function") error(e);
