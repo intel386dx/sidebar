@@ -4,14 +4,26 @@
 
 </center>
 
+<center>
+
 [![Last commit time](https://img.shields.io/github/last-commit/intel386dx/sidebar.svg)](https://github.com/intel386dx/sidebar/commits/main) [![Download ZIP file](https://img.shields.io/badge/zip%20file-download-blue)](https://github.com/intel386dx/sidebar/archive/main.zip)
 
+</center>
+
+<center>
+
 ![My designed cover](cover/cover-shadowed.png)
+
+</center>
 
 ## 1. Introduction
 This is a Node.js script that will run a WebSocket server running on the port 8080, serve the sidebar page on the port 8081, and serve the UI to update the sidebar on the port 8082. Those are the default ports and can be changed by editing the ``sidebar.node.js`` script.
 
+<center>
+
 ![Sidebar UI](screenshots/information-sidebar.png)
+
+</center>
 
 The source files for the sidebar, the sidebar changer UI, and the minified versions of [Marked](https://github.com/markedjs/marked) and [DOMPurify](https://github.com/cure53/DOMPurify) is included in the ``pages`` folder. 
 
@@ -77,11 +89,19 @@ node node_modules\uglify-js\bin\uglifyjs sidebar.node.js
 > ```
 > will output something like this:
 >
+> <center>
+>
 > ![This is what you will see.](screenshots/escaping-example.png)
+>
+> </center>
 
 2. Or, you can access the port 8082 (by default) to access the web-based UI to change the message. The UI is simple and intuitive. You choose the message type, type in the message, and hit the Update button.
 
+<center>
+
 ![Update Sidebar UI](screenshots/update-sidebar.png)
+
+</center>
 
 > **Note:** This is the recommended way to edit the sidebar. If you don't understand how does JSON work, I recommend you to use the web-based UI instead.
 
